@@ -1,4 +1,4 @@
-FROM ubuntu:latest as build
+FROM --platform=arm64 ubuntu:latest as build
 RUN apt-get update
 RUN apt-install openjdk-17-jdk -y
 COPY . .

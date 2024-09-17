@@ -1,5 +1,6 @@
 package org.github.beccatk;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -16,10 +17,11 @@ import org.github.beccatk.Events.SlashCommandListener;
 import java.util.EnumSet;
 
 public class Client {
-    final private String token;
+
+    private String token;
     private JDABuilder jda;
-    public Client(){
-        this.token = System.getenv("TOKEN");
+    public Client(String token){
+        this.token = token;
         this.jda = JDABuilder.createDefault(this.token, EnumSet.of(GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_TYPING, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_EMOJIS_AND_STICKERS));
     }
 

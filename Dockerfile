@@ -17,7 +17,7 @@ RUN export JAVA_HOME
 
 COPY . .
 RUN apt-get install maven -y
-RUN mvn clean-install
+RUN mvn clean install
 FROM openjdk:11-jre
 COPY --from=build /target/BeccaTk-1.0-SNAPSHOT.jar app.jar
 

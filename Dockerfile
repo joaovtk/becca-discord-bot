@@ -1,24 +1,21 @@
-FROM --platform=arm64 ubuntu:latest as build
-# Install OpenJDK-8
-RUN apt-get update && \
-    apt-get install -y openjdk-8-jdk && \
-    apt-get install -y ant && \
-    apt-get clean;
-    
-# Fix certificate issues
-RUN apt-get update && \
-    apt-get install ca-certificates-java && \
-    apt-get clean && \
-    update-ca-certificates -f;
+# Use a imagem base com JDK 22
+FROM eclipse-temurin:22-jdk-alpine
 
-# Setup JAVA_HOME -- useful for docker commandline
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
-RUN export JAVA_HOME
+# Instalar Maven
+RUN apk add --no-cache maven
 
-COPY . .
-RUN apt-get install maven -y
-RUN mvn clean install
-FROM openjdk:11-jre
-COPY --from=build /target/BeccaTk-1.0-SNAPSHOT.jar app.jar
+# Definir o diretório de trabalho
+WORKDIR /app
 
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
+# Copiar o arquivo pom.xml e o código-fonte para o contêiner
+COPY pom.xml .
+COPY src ./src
+
+# Executar o Maven para compilar o projeto
+RUN mvn clean package
+
+# Expor a porta necessária
+EXPOSE 8080
+
+# Comando para executar a aplicação
+CMD ["java", "-jar", "target/BeccaTk.jar"]

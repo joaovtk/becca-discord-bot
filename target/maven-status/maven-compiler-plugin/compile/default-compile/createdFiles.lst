@@ -1,0 +1,4 @@
+org\github\beccatk\Client.class
+org\github\beccatk\Main.class
+org\github\beccatk\Events\SlashCommandListener.class
+org\github\beccatk\Events\ReadyEventListener.class

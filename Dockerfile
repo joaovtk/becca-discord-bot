@@ -1,5 +1,5 @@
 # Use a imagem base com JDK 22
-FROM eclipse-temurin:22-jdk-alpine
+FROM eclipse-temurin:22-jdk-alpine AS build
 
 # Instalar Maven
 RUN apk add --no-cache maven
@@ -8,14 +8,18 @@ RUN apk add --no-cache maven
 WORKDIR /app
 
 # Copiar o arquivo pom.xml e o código-fonte para o contêiner
-COPY pom.xml .
-COPY src ./src
+COPY . .
+
+# Expor a porta que a aplicação vai usar (se necessário)
+EXPOSE 8080
 
 # Executar o Maven para compilar o projeto
-RUN mvn clean package
+RUN mvn clean install
+
+#COPY --from=build /target/BeccaTk-1.0-SNAPSHOT.jar /app/BeccaTk.jar
 
 # Expor a porta necessária
 EXPOSE 8080
 
 # Comando para executar a aplicação
-CMD ["java", "-jar", "target/BeccaTk.jar"]
+ENTRYPOINT ["java", "-jar", "/target/BeccaTk.jar"]

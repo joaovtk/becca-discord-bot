@@ -22,4 +22,4 @@ RUN mvn clean install
 EXPOSE 8080
 
 # Comando para executar a aplicação
-ENTRYPOINT ["java", "-jar", "/target/BeccaTk.jar"]
+ENTRYPOINT ["java", "-jar", "/target/BeccaTk-1.0-SNAPSHOT.jar"]

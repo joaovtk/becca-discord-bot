@@ -1,20 +1,18 @@
 package org.github.beccatk;
 
-import io.github.cdimascio.dotenv.Dotenv;
+import java.util.EnumSet;
+
+import org.github.beccatk.Events.ReadyEventListener;
+import org.github.beccatk.Events.SlashCommandListener;
+
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
-import org.github.beccatk.Events.ReadyEventListener;
-import org.github.beccatk.Events.SlashCommandListener;
-
-import java.util.EnumSet;
 
 public class Client {
 
@@ -29,7 +27,7 @@ public class Client {
         this.jda.addEventListeners(new ReadyEventListener());
         this.jda.addEventListeners(new SlashCommandListener());
 
-        this.jda.setActivity(Activity.playing("Estou de volta em java"));
+        this.jda.setActivity(Activity.playing("Pray it away, I swear I'll never be a saint"));
 
         SubcommandGroupData[] data = {
                 new SubcommandGroupData("ação", "Comandos de açoes")
@@ -57,7 +55,7 @@ public class Client {
         };
 
         SubcommandData[] funnySub = {new SubcommandData("dado", "Rola um dado de 0 a 10, você escolhe o limite de lados").addOption(OptionType.NUMBER, "limite", "limite do numero de dados"),
-                new SubcommandData("8ball", "Bola 8 ou 8ball é um jogo você uma pergunta e eu respondo se você deve ou não fazer ou que eu acho").addOption(OptionType.STRING, "question", "Uma pergunta aleatoria que você quer fazer"),
+                new SubcommandData("8ball", "Bola 8 ou 8ball é um jogo você uma pergunta e eu respondo se você deve ou não fazer ou que eu acho").addOption(OptionType.STRING, "question", "Uma pergunta aleatoria que você quer fazer", true),
                 new SubcommandData("meme", "Gera um meme aleatorio"),
                 new SubcommandData("piada", "Gera uma piada aleatoria"),
                 new SubcommandData("gato", "Envia para você uma foto de gato aleatoria para alegrar seu dia"),

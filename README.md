@@ -8,7 +8,7 @@ Ainda por vir
 - Linguagem: java
 - Library: jda
 - API Linugagem: java
-- API Banco de Dados: MongoDB
+- API Banco de Dados: Mysql
 - API libary: Spring Boot
 # Termos de condições
 Ao usar ou modificar beccatk você aceitara os seguites <a href="https://joaovtk.github.io/becca-discord-bot/terms" target="_blank">Termos e Condições</a>

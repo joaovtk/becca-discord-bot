@@ -3,5 +3,5 @@ services:
     name: becca-discord-bot
     runtime: docker
     envVars: 
-       - keys: TOKEN
+       - key: TOKEN
          sync: false

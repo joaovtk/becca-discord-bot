@@ -4,3 +4,5 @@ mise.toml
 __pycache__
 .tool-versions
 Dockerfile.dev
+mensagem.mp3
+main.log

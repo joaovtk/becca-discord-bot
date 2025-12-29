@@ -1,9 +1,19 @@
 from dotenv import dotenv_values
-
+import os
 from src.__main__ import Bot
+from app import keep_alive
 
-env = dotenv_values(".env")
 bot = Bot()
+env = dotenv_values(".env")
+print(len(env)) 
+if len(env) > 0:
+    keep_alive()
+    print("Passou 1")
+    if __name__ == "__main__":
+        bot.run(env["TOKEN"])
 
-if __name__ == "__main__":
-    bot.run(env["TOKEN"])
+else:   
+    keep_alive()
+    print("Passou 2")
+    if __name__ == "__main__":
+        bot.run(os.getenv("TOKEN"))

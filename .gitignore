@@ -2,3 +2,5 @@ venv
 mise.toml
 .env
 __pycache__
+.tool-versions
+Dockerfile.dev

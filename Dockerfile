@@ -2,8 +2,8 @@ FROM python:3.11-alpine AS build
 WORKDIR /app
 
 COPY ./src /app/src/
+COPY render.yaml /app/render.yaml
 COPY laucher.py /app/laucher.py
-COPY .env /app/.env
 COPY requirements.txt /app/requirements.txt
 
 RUN pip install virtualenv
@@ -12,4 +12,4 @@ RUN source venv/bin/activate
 
 RUN pip install -r requirements.txt
 
-RUN python laucher.py
+ENTRYPOINT ["python", "laucher.py"]

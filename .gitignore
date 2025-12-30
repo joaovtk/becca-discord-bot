@@ -6,3 +6,5 @@ __pycache__
 Dockerfile.dev
 mensagem.mp3
 main.log
+.env
+.vscode

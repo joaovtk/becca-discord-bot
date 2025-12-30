@@ -3,8 +3,6 @@ import os
 import discord
 from discord.ext import commands
 
-from src.logging import logger
-
 
 class Bot(commands.Bot):
     def __init__(self):

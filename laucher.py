@@ -8,12 +8,9 @@ env = dotenv_values(".env")
 print(len(env)) 
 if len(env) > 0:
     keep_alive()
-    print("Passou 1")
     if __name__ == "__main__":
         bot.run(env["TOKEN"])
-
 else:   
     keep_alive()
-    print("Passou 2")
     if __name__ == "__main__":
         bot.run(os.getenv("TOKEN"))

@@ -8,3 +8,5 @@ mensagem.mp3
 main.log
 .env
 .vscode
+
+dbs/perm.db

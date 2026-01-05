@@ -3,7 +3,6 @@ import os
 import discord
 from discord.ext import commands
 
-
 class Bot(commands.Bot):
     def __init__(self):
         super().__init__(
@@ -13,6 +12,7 @@ class Bot(commands.Bot):
         )
 
     async def on_ready(self):
+        
         for file in os.listdir("src/commands/"):
             if file.endswith(".py"):
                 self.load_extension(f"src.commands.{file.replace('.py', '')}")
@@ -25,6 +25,6 @@ class Bot(commands.Bot):
             )
         )
         await self.sync_commands()
-
+               
     def run(self, token):
         super().run(token=token)

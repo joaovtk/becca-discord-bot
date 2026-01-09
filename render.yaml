@@ -1,7 +1,0 @@
-services: 
-  - type: worker
-    name: becca-discord-bot
-    runtime: docker
-    envVars: 
-       - key: TOKEN
-         sync: false

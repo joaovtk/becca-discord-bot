@@ -1,70 +1,66 @@
 package tk.beccaapi.Controller;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import tk.beccaapi.Model.Achivements;
-import tk.beccaapi.Model.AchivementsUser;
+import tk.beccaapi.Controller.dto.Response;
+import tk.beccaapi.Model.Achievements;
+import tk.beccaapi.Model.AchievementsUser;
 import tk.beccaapi.Model.User;
-import tk.beccaapi.Model.Repo.AchivementsRepo;
-import tk.beccaapi.Model.Repo.AchivementsUserRepo;
+import tk.beccaapi.Model.Repo.AchievementsRepo;
+import tk.beccaapi.Model.Repo.AchievementsUserRepo;
 import tk.beccaapi.Model.Repo.UserRepo;
 
 @RequestMapping("/achivements")
 @RestController
 public class rcAchivements {
-
     @Autowired
-    public UserRepo userRepo;
+    private UserRepo userRepo;
     @Autowired
-    public AchivementsRepo achivRepo;
+    private AchievementsRepo achievementsRepo;
     @Autowired
-    public AchivementsUserRepo achivUserRepo;
-
+    private AchievementsUserRepo achievementsUserRepo;
     
     @GetMapping("/gain")
-    public String getGain(@RequestParam String userId, @RequestParam() String achivId, @RequestParam() String achivCmd){
+    public ResponseEntity<Response> getGain(@RequestParam String userId, @RequestParam() String identifier){
         User fetch = userRepo.findByUserId(userId);
-        String msg = "";
+        ResponseEntity<Response> msg;
         if(fetch == null){
             User user = new User(userId, 10.0, 0.0);
             userRepo.save(user);
-            Achivements fetchAchiv = achivRepo.findByAchivId(achivId);
-            if (fetchAchiv == null){
-                msg = "Essa conquista ainda não existe";
-            }  
+           
+        }
+        
+        Achievements fetchAchievements = achievementsRepo.findByIdentifier(identifier);
+        if(fetchAchievements == null){
+            msg = ResponseEntity.status(403).body(new Response("Essa conquista não existe", "403"));
         }else {
-            // Pegar o usuario e comparar se ele possui a conquista
-            AchivementsUser achivment = achivUserRepo.findOne(String userId);
-            
-            if(achivment != null){
-                msg = "Not passed";
+            AchievementsUser achievementsUser = achievementsUserRepo.findByUserIdAndIdentifier(userId, identifier);
+            if(achievementsUser == null){
+                AchievementsUser newAchievementsUser = new AchievementsUser(identifier, userId, fetchAchievements.getIdentifierCommand());
+                achievementsUserRepo.save(newAchievementsUser);
+                msg = ResponseEntity.status(200).body(new Response("Conquista registrada", "200"));
             }else {
-                AchivementsUser achivement = new AchivementsUser(achivId, userId, achivCmd);
-                achivUserRepo.save(achivement);
-                msg = "Respect";
+                msg = ResponseEntity.status(403).body(new Response("Você já tem conquista", "403"));
             }
         }
         return msg;
     }
 
     @GetMapping("/add")
-    public String getAdd(@RequestParam() String achivId, @RequestParam() String achivCmd, @RequestParam() String desc){
-        String msg = "";
-        Achivements fetchAchiv = achivRepo.findByAchivId(achivId);
-        if(fetchAchiv == null){
-            Achivements newAchiv = new Achivements(achivId, msg, achivCmd, desc);
-            achivRepo.save(newAchiv);
-            msg = "Conquista adicionada";
+    public ResponseEntity<Response> getAdd(@RequestParam() String identifier, @RequestParam() String identifierCommand, @RequestParam() String desc){
+        ResponseEntity<Response> msg;
+        Achievements fetchAchievements = achievementsRepo.findByIdentifier(identifier);
+        if(fetchAchievements == null){
+            Achievements newAchievements = new Achievements(identifier, identifierCommand, desc);
+            achievementsRepo.save(newAchievements);
+            msg = ResponseEntity.status(403).body(new Response("Conquista adicionada", "403"));
         }else {
-            msg = "Conquista já existe";
+            msg = ResponseEntity.status(403).body(new Response("Conquista já existe", "403"));
         }
         return msg;
-    
     }
 }

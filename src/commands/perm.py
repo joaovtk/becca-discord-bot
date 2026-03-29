@@ -3,7 +3,7 @@ from discord.ext import commands
 import sqlite3
 import asyncio
 
-DB_PATH = "dbs/perm.db"
+DB_PATH = "db/perm.db"
 
 class Perm(commands.Cog):
     def __init__(self, bot):

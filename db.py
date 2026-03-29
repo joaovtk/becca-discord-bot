@@ -16,21 +16,21 @@ class AchievementsCount(BaseDatabase):
         self.con = sqlite3.connect(self.databaseName)
         self.cur = self.con.cursor()
     def addUser(self, userid: str):
-        self.open()
+        #self.open()
         response = self.cur.execute("SELECT * FROM users WHERE userid = ?", ([userid])).fetchone()
 
         if not response:
             self.cur.execute("INSERT INTO users VALUES(?)", ([userid]))
             self.con.commit()
     def addCommand(self, commandName: str):
-        self.open()
+        #self.open()
         response = self.cur.execute("SELECT * FROM commands WHERE commandName = ?", ([commandName])).fetchone()
         if not response:
             self.cur.execute("INSERT INTO commands VALUES(?)", ([commandName]))
             self.con.commit()
         self.con.close()
     def incCount(self, commandName: str, userId: str) -> str:
-        self.open()
+        #self.open()
         responseUsers = self.cur.execute("SELECT * FROM users WHERE userid = ?", ([userId])).fetchone()
         responseCommands = self.cur.execute("SELECT * FROM commands WHERE commandName = ?", ([commandName])).fetchone()
         
@@ -49,7 +49,7 @@ class AchievementsCount(BaseDatabase):
 
         self.con.commit()
             
-        self.con.close()
+        #self.con.close()
     def getCount(self, commandName: str, userId: str):
         self.open()
         response = self.cur.execute("SELECT * FROM commandsUser WHERE userid = ? AND commandName = ?", ([userId, commandName])).fetchone()

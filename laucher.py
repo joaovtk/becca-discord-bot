@@ -19,7 +19,7 @@ def start_bot():
         )
 
     print(f"Token detectado (tamanho: {len(token)}). Iniciando...")
-    keep_alive()
+    #keep_alive()
     
     # Inicia o bot de fato
     bot = Bot()

@@ -23,7 +23,6 @@ class Purge(commands.Cog):
                 msg = await ctx.reply("o usuário foi desbanido por forças divinas")
                 invite = await ctx.channel.create_invite(max_age=3600, max_uses=1, unique=True, reason="Desbanimento")
                 await user.send(invite.url)
-
                 return
 
         await ctx.reply("O Usuário já está desbanido, eu sei que algumas pessoas merecem perdão mais por favor usa o comando **;pban** denovo, **to esperando...**")
@@ -109,9 +108,6 @@ class Purge(commands.Cog):
     async def kick_call_error(self, ctx, error):
         if isinstance(error, commands.MemberNotFound):
             await ctx.send("Essa pessoa realmente existe cara...")
-    
-
-        
 
 def setup(bot):
     bot.add_cog(Purge(bot))

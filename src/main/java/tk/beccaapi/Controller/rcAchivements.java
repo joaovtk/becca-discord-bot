@@ -20,12 +20,14 @@ import tk.beccaapi.Model.Repo.UserRepo;
 @RequestMapping("/achievements")
 @RestController
 public class rcAchivements {
-    @Autowired
     private UserRepo userRepo;
-    @Autowired
     private AchievementsRepo achievementsRepo;
-    @Autowired
     private AchievementsUserRepo achievementsUserRepo;
+    public rcAchivements(AchievementsRepo achievementsRepo, UserRepo userRepo, AchievementsUserRepo achievementsUserRepo){
+        this.userRepo = userRepo;
+        this.achievementsRepo = achievementsRepo;
+        this.achievementsUserRepo = achievementsUserRepo;
+    }
     
     @Value("${SECRET}")
     private String secret;

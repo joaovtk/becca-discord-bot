@@ -1,29 +1,27 @@
 import os
+import asyncio
 from dotenv import load_dotenv
 from src.__main__ import Bot
-from app import keep_alive
 
-# 1. Tenta carregar o .env (útil para desenvolvimento local)
 load_dotenv()
-
-# 2. Prioriza o Token do sistema (Render Environment) 
-# ou do .env carregado pelo load_dotenv
 token = os.getenv("TOKEN")
 
-def start_bot():
-    # VALIDAÇÃO CRÍTICA: Se o token for inválido, o código para aqui.
+async def main():
     if not token or len(token.strip()) < 10:
-        raise ValueError(
-            "ERRO FATAL: O Token não foi encontrado ou é inválido! "
-            "Verifique a aba 'Environment' no painel do Render."
-        )
+        raise ValueError("ERRO FATAL: Token inválido.")
 
-    print(f"Token detectado (tamanho: {len(token)}). Iniciando...")
-    #keep_alive()
+    print(f"Token detectado. Iniciando o Pycord...")
     
-    # Inicia o bot de fato
+    # Agora o loop já existe na thread porque estamos dentro de um 'async def' rodado pelo asyncio.run()
     bot = Bot()
-    bot.run(token.strip())
+    
+    # Iniciamos o bot passando o token. 
+    # Como já estamos em um ambiente assíncrono, usamos o start() para não colidir loops.
+    await bot.start(token.strip())
 
 if __name__ == "__main__":
-    start_bot()
+    try:
+        # asyncio.run cria o event loop automaticamente de forma moderna e segura
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("\nBot desligado com sucesso.")

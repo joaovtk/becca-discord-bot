@@ -5,6 +5,7 @@ from discord.ext import commands
 from dotenv import dotenv_values
 
 class Bot(commands.Bot):
+    """ Main Class """
     def __init__(self):
         self.env = dotenv_values(".env")
         if self.env["STATUS"] == "D":
@@ -34,14 +35,3 @@ class Bot(commands.Bot):
                 url="https://github.com/joaovtk/becca-discord-bot",
             )
         )
-    #async def on_member_ban(self, user):
-    #    if user.id in ["768614963002474506", "608309054485430294"]:
-    #        await user.guild.unban(user)
-    #        try:
-    #            await user.guild.fetch_channels().send("But it refused")
-    #        except Exception as err:
-    #            print(err)
-
-
-    def run(self, token):
-        super().run(token=token)

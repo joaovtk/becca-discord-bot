@@ -19,10 +19,7 @@ class Bot(commands.Bot):
         )
 
     async def on_connect(self):
-
-        for file in os.listdir("src/commands/"):
-            if file.endswith(".py"):
-                self.load_extension(f"src.commands.{file.replace('.py', '')}")
+        self.load_extensions("src.commands")
 
         if self.env["STATUS"] == "D":
             msg = "Ouvindo a becca no teste"

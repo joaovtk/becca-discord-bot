@@ -43,7 +43,25 @@ class Say(commands.Cog):
                 await ctx.channel.send("☠️...A tentativa de comunicação falhou...☠️")
                 print(err)
             
+
+    @utilsGroup.command(name="echo", description="Echo Command")
+    async def cmd_ssay(self, ctx: discord.ApplicationContext, msg: str, user: discord.User = None, name: str = None, avatar: discord.Attachment = None):
+        print(avatar.filename)
+        if avatar and not avatar.filename.endswith((".png", "jpeg", "gif", "jpg")):
+            await ctx.respond("O arquivo deve terminar com .png, .gif, .jpeg, .jpg, .webp")
+        else:  
+            superbot = {}
+            if name and avatar:
+                superbot = {"name": name, "avatar": avatar.url}
+            elif user:
+                superbot = {"name": user.name, "avatar": user.display_avatar.url}
+            else:
+                superbot = {"name": ctx.author.name, "avatar": ctx.author.display_avatar}
         
+            webhook = await ctx.channel.create_webhook(name="Becca Web")
+            await ctx.respond(ephemeral=True, content="Enviado")
+            await webhook.send(content=f"{msg}", username=superbot["name"], avatar_url=superbot["avatar"], )
+
             
     @commands.command(name="audio",description="audio")
     async def cmd_say_audio(self, ctx: commands.Context, * ,message: str):

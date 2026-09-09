@@ -32,3 +32,4 @@ class Bot(commands.Bot):
                 url="https://github.com/joaovtk/becca-discord-bot",
             )
         )
+        await self.sync_commands(force=True)

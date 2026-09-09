@@ -10,10 +10,13 @@ class WordleView(discord.ui.View):
            item.disabled = True
 
         await self.message.edit(view=self)
-    @discord.ui.button(label="Modo Difícil", style=discord.ButtonStyle.primary, disabled=True)
+    @discord.ui.button(label="Modo Difícil", style=discord.ButtonStyle.secondary, disabled=True, emoji="🇩")
     async def button_hard(self, button: discord.Button, interaction: discord.Interaction):
         pass
-    @discord.ui.button(label="Modo Normal", style=discord.ButtonStyle.primary)
+    @discord.ui.button(label="Modo Normal", style=discord.ButtonStyle.secondary, emoji="🇹")
     async def button_normal(self, button: discord.Button, interaction : discord.Interaction):
         from src.view.Wordle.WordleNormal import NormalView
         await interaction.edit(view=NormalView(self.DB_PATH, self.responseTermo))
+    @discord.ui.button(label="Modo Extra", style=discord.ButtonStyle.secondary, emoji="🇪")
+    async def button_extra(self, button: discord.Button, interaction : discord.Interaction):
+        pass

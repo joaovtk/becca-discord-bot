@@ -13,3 +13,4 @@ dbs/perm.db
 db/achievementsCount.db
 db/wordle.db
 temp/
+/db

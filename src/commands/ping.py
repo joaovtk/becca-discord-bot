@@ -18,6 +18,8 @@ class Ping(commands.Cog):
         self.count = AchievementsCount()
         self.url = env["APIURL"]
         self.secret = env["SECRET"]
+        self.payloadAdd = {}
+        self.payloadGain = {}
 
     @commands.command(name="ping", description="says pong")
     async def cmd_ping(self, ctx: commands.Context):
@@ -31,18 +33,8 @@ class Ping(commands.Cog):
             session = requests.Session()
             identifier = f"1120262503"
             desc = "Using ping command for first time"
-            payloadAdd = {"identifier": identifier, "identifierCommand": "ping", "desc": "Try use ping for first time", "secret": self.secret}
-            payloadGain = {"userId": ctx.author.id, "identifier": identifier, "secret": self.secret, "cookies": 1   , "rupes": 200.0}
-    
-            
-
-            requests.post(self.url+ f"/achievements/add", json=payloadAdd)
-            responseOne =  requests.post(f"{self.url}/achievements/gain", json=payloadGain)
-            z = 1
-            print(responseOne.status_code)
-            if responseOne.status_code == 200:
-                await msg.channel.send(f"O {ctx.author} consegui uma conquista do comando **ping**: \n ||{desc}||")
-            print(responseOne.status_code, responseOne.json())
+            self.payloadAdd = {"identifier": identifier, "identifierCommand": "ping", "desc": "Try use ping for first time", "secret": self.secret}
+            self.payloadGain = {"userId": ctx.author.id, "identifier": identifier, "secret": self.secret, "cookies": 1   , "rupes": 200.0}            
         except Exception as err:
             print(err)
             await ctx.reply("Houve um erro na execução")
